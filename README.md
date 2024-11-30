@@ -1,9 +1,9 @@
 # DBMS
-# Mini DBMS Project
+# Mini DBMS Project [Bash Scripting] 
 
 This project is a simple **Database Management System (DBMS)** implemented using Bash scripts. It allows users to create, manage, and perform operations on tables stored in the filesystem. The system includes functionalities to create tables, insert data, and perform basic table operations.
 
-Mini-DBMS/
+# DBMS Structure
 ```
 ├── README.md                # Project documentation
 ├── bin/                     # Scripts directory
