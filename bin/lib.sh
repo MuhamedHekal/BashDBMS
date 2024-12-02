@@ -38,8 +38,10 @@ validate_data_type() {
 
 # Function to print error messages
 print_error() {
-    # Placeholder for error printing logic
-    echo "print_error"
+    local message=$1
+    local red_color="\033[31m"
+    local reset_color="\033[0m"
+    echo -e "${red_color}[ERROR]: $message${reset_color}"
 }
 
 # Function to log messages (optional for debugging)
