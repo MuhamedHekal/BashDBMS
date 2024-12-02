@@ -46,7 +46,33 @@ print_error() {
 
 # Function to log messages (optional for debugging)
 log_message() {
-    # Placeholder for logging logic
-    echo "log_message"
+    local data_base_name=$1 #database name folder
+    local level="$2"      # Log level (INFO, ERROR, WARNING etc.)
+    local message="$3"     # Message to log
+    local color_reset="\033[0m"
+    local color_red="\033[31m"    # For ERROR
+    local color_yellow="\033[33m" # For WARNING
+    local color_green="\033[32m"  # For INFO
+    local logfile="data/$data_base_name/logfile.log"
+
+    # Determine color for terminal output based on log level
+    local color
+    case "$level" in
+        INFO) color="$color_green" ;;
+        ERROR) color="$color_red" ;;
+        WARNING) color="$color_yellow" ;;
+        *) color="$color_reset" ;;
+    esac
+    # check if the log file exists or not and if nor create it 
+    file_exists "$logfile"
+    if [ $? -eq 0 ]; then 
+        touch "$logfile"
+    fi;
+
+    # Print to terminal with color
+    echo -e "${color}[${level}]: $message${color_reset}"
+
+    # Log to file without color
+    echo "$(date +"%Y-%m-%d %H:%M:%S") [${level}]: $message" >> "$logfile"
     
 }
