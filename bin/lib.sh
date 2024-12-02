@@ -22,8 +22,18 @@ directory_exists() {
 
 # Function to validate data before insertion
 validate_data_type() {
-    # Placeholder for data validation logic
-    echo "validate_data_type" 
+    local input="$1"
+
+    if [[ "$input" =~ ^[0-9]+$ ]]; then
+        return 1 # 1 for integer data type 
+  
+    elif [[ "$input" =~ ^[a-zA-Z0-9]+$ ]]; then
+    	
+        return 2 # 2 for string data type
+    else
+       
+        return 0 # 0 for non defiend data type 
+    fi
 }
 
 # Function to print error messages
@@ -38,5 +48,3 @@ log_message() {
     echo "log_message"
     
 }
-
-
