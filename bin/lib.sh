@@ -5,16 +5,19 @@
 # Function to check if a file exists
 file_exists() {
     if [ -e "$1" ]; then
-        echo "file exist"
+        return 1
     else
-        echo "file not exist"
+        return 0
     fi ;
 }
 
 # Function to check if a directory exists
 directory_exists() {
-    # Placeholder for directory existence logic
-    echo "directory_exists"
+    if [ -d "$1" ]; then
+        return 1
+    else
+       retuen 0
+    fi ;
 }
 
 # Function to validate data before insertion
@@ -37,4 +40,3 @@ log_message() {
 }
 
 
-file_exists bin/lib.sh
