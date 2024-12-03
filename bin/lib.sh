@@ -14,9 +14,9 @@ file_exists() {
 # Function to check if a directory exists
 directory_exists() {
     if [ -d "$1" ]; then
-        return 1
+        return 1;
     else
-       retuen 0
+       return 0;
     fi ;
 }
 
@@ -46,14 +46,13 @@ print_error() {
 
 # Function to log messages (optional for debugging)
 log_message() {
-    local data_base_name=$1 #database name folder
-    local level="$2"      # Log level (INFO, ERROR, WARNING etc.)
-    local message="$3"     # Message to log
+    local level="$1"      # Log level (INFO, ERROR, WARNING etc.)
+    local message="$2"     # Message to log
     local color_reset="\033[0m"
     local color_red="\033[31m"    # For ERROR
     local color_yellow="\033[33m" # For WARNING
     local color_green="\033[32m"  # For INFO
-    local logfile="data/$data_base_name/logfile.log"
+    local logfile="databases/logfile.log"
 
     # Determine color for terminal output based on log level
     local color

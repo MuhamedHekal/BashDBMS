@@ -1,4 +1,5 @@
 #!/bin/bash
+source "$(dirname "$0")/DATABASE_OPERATIONS.sh"
 
 # Main script to initialize and run the DBMS
 
@@ -7,8 +8,8 @@ initialize_database() {
 
     # Create a directory to store the tables (if it doesn't exist)
     if [ ! -d "data/tables" ]; then
-        mkdir -p data/tables
-        echo "Tables directory created."
+        mkdir -p databases/
+        echo "Databases directory created."
     fi
 }
 
@@ -28,16 +29,21 @@ display_main_menu() {
 handle_user_input() {
     case $1 in
         1)
-            ./bin/BATABASE_OPERATIONS.sh create_database
+            ./bin/DATABASE_OPERATIONS.sh 
+            create_database;
+            
             ;;
         2)
-            ./bin/BATABASE_OPERATIONS.sh list_databases
+            ./bin/DATABASE_OPERATIONS.sh 
+            list_databases
             ;;
         3)
-            ./bin/BATABASE_OPERATIONS.sh connect_to_database
+            ./bin/DATABASE_OPERATIONS.sh 
+            connect_to_database
             ;;
         4)
-            ./bin/BATABASE_OPERATIONS.sh drop_database
+            ./bin/DATABASE_OPERATIONS.sh 
+            drop_database
             ;;
         5)
             echo "Exiting..."

@@ -1,0 +1,11 @@
+2024-12-03 23:51:30 [ERROR]: Tried to enter an invalid name [ 24234 ] for database 
+2024-12-03 23:51:40 [ERROR]: Tried to enter an invalid name [ ^&^&^&% ] for database 
+2024-12-03 23:51:50 [INFO]: Database Mohamed Created
+2024-12-03 23:52:43 [ERROR]: Tried to create an existing database with name mohamed
+2024-12-03 23:53:21 [ERROR]: Tried to create an existing database with name mohamed
+2024-12-03 23:53:23 [INFO]: Database ahmed Created
+2024-12-03 23:54:16 [ERROR]: Tried to create an existing database with name ahmed
+2024-12-03 23:54:35 [ERROR]: Tried to create an existing database with name ahmed
+2024-12-03 23:54:37 [ERROR]: Tried to create an existing database with name mohamed
+2024-12-03 23:54:40 [INFO]: Database hekal Created
+2024-12-03 23:55:17 [ERROR]: Tried to enter an invalid name [ _efdsfsd ] for database 
