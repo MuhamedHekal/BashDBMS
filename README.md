@@ -10,9 +10,10 @@ This project is a simple **Database Management System (DBMS)** implemented using
 │   ├── RUNDBMS.sh           # Main script (entry point)
 │   ├── TABLE_OPERATIONS.sh  # Table-related functions
 │   └── lib.sh               # Common utility functions
-├── data/                    # Data storage directory
+├── databases/                    # Data storage directory
 │   └── DBs_names/           # Directory for databases
 │       └── tables_name/     # Directory for tables within a database
 │           └── tables_data/ # File(s) storing table data
+│   └── logfile.log          # file that contain all logs made in this RDMS
 └── docs/                    # Documentation files
 
