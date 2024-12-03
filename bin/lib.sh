@@ -69,8 +69,8 @@ log_message() {
     fi;
 
     # Print to terminal with color
-    echo -e "${color}[${level}]: $message${color_reset}"
-
+    #echo -e "${color}[${level}]: $message${color_reset}"
+    
     # Log to file without color
     echo "$(date +"%Y-%m-%d %H:%M:%S") [${level}]: $message" >> "$logfile"
     

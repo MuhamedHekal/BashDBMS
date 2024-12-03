@@ -15,7 +15,10 @@ initialize_database() {
 
 # Function to display the main menu to the user
 display_main_menu() {
-    
+    clear # Clear the screen before showing the menu
+    echo "========================="
+    echo "       MAIN MENU"
+    echo "========================="
     echo "  1. Create Database"
     echo "  2. List Databases"
     echo "  3. Connect To Database"
@@ -29,22 +32,13 @@ display_main_menu() {
 handle_user_input() {
     case $1 in
         1)
-            ./bin/DATABASE_OPERATIONS.sh 
-            create_database;
-            
-            ;;
+            create_database ;;
         2)
-            ./bin/DATABASE_OPERATIONS.sh 
-            list_databases
-            ;;
+            list_databases;;
         3)
-            ./bin/DATABASE_OPERATIONS.sh 
-            connect_to_database
-            ;;
+            connect_to_database ;;
         4)
-            ./bin/DATABASE_OPERATIONS.sh 
-            drop_database
-            ;;
+            drop_database;;
         5)
             echo "Exiting..."
             exit 0
