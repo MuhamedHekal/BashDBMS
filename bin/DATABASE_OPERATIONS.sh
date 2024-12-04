@@ -1,5 +1,6 @@
 #!/bin/bash
 source "$(dirname "$0")/lib.sh"
+source "$(dirname "$0")/TABLE_OPERATIONS.sh"
 
 # Database-related operations
 
@@ -20,6 +21,7 @@ create_database() {
     #if not exists create database foler
         else 
             mkdir -p "databases/$dbname";
+            echo "Database $dbname Created"
             log_message INFO "Database $dbname Created";
         fi;
         read -p "press to continue"
@@ -38,7 +40,7 @@ list_databases() {
     directory_exists "databases/"
     if [ $? == 1 ] && [ "$(ls -A databases/)" ] ; then 
         echo -e "$(ls -l databases/ | grep ^d | awk '{print $9}')"
-        log_message INFO "lists the databases exist"
+        log_message INFO "lists the exist databases "
     else
         Echo "There is no databases exists"
     fi;
@@ -49,10 +51,30 @@ list_databases() {
 
 # Function to connect to database
 connect_to_database() {
-    echo "connect_to_database";
+    read -p "Please enter the database name: " dbname
+    validate_data_type $dbname
+    if [ $? == 2 ]; then
+        directory_exists "databases/$dbname"
+        if [ $? == 1 ]; then
+            log_message INFO "connect to $dbname"
+            cd databases/$dbname
+            display_table_menu
+        else
+            print_error "Database not exist"
+            log_message ERROR "try to connect to not existing database $dbname"
+            connect_to_database
+        fi;
+    else
+        print_error "Database name must be string"
+        log_message ERROR "Tried to enter an invalid name [ $dbname ] for database "
+        connect_to_database
+    fi;
+   
 }
 
 # Function to delete a table
 drop_database() {
     echo "drop_database";
 }
+
+
