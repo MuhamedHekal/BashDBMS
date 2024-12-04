@@ -82,7 +82,6 @@ handle_user_input_table() {
         8)
             cd ../..
             display_main_menu
-            echo "Exiting..."
             exit 0
             ;;
         *)

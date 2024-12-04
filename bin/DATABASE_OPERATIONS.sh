@@ -74,7 +74,26 @@ connect_to_database() {
 
 # Function to delete a table
 drop_database() {
-    echo "drop_database";
+    read -p "Please enter the database name: " dbname
+    validate_data_type $dbname
+    if [ $? == 2 ]; then
+        directory_exists "databases/$dbname"
+        if [ $? == 1 ]; then
+            rm -r databases/$dbname
+            log_message INFO "Drop Database $dbname"
+            Echo "Database Droped"
+            read -p "press enter to continue"
+            display_main_menu
+        else
+            print_error "Database not exist"
+            log_message ERROR "try to Drop not existing database $dbname"
+            drop_database
+        fi;
+    else
+        print_error "Database name must be string"
+        log_message ERROR "Tried to enter an invalid name [ $dbname ] for database "
+        drop_database
+    fi;
 }
 
 
