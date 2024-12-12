@@ -1,11 +1,89 @@
 #!/bin/bash
+# Define the project root directory
+PROJECT_ROOT="$(dirname "$(dirname "$0")")"
 
-# Table-related operations
+# Sourcing utility script
+source "$PROJECT_ROOT/bin/lib.sh"
+
+# check if the value exists in a list or not
+check_if_exists() {
+    local col_name="$1"
+    local array=("${!2}")  # Create an array from the array reference passed
+
+    for name in "${array[@]}"; do
+        if [[ "$name" == "$col_name" ]]; then
+            return 0  # Exists
+        fi
+    done
+    return 1  # Does not exist
+}
+
+
 
 # Function to create a new table
 create_table() {
-    # Placeholder for table creation logic
-    echo "create table" ; 
+   #Get the table name from the user
+    read -p "please enter the table name : " tb_name
+   #check if the table name exist in the databases
+    file_exists $tb_name;
+    if [ $? -eq 1 ]; then
+        print_error "Table Exist"
+        log_message  ERROR "Tried to create an existing table with name $tb_name" 
+    else
+        while true; do 
+            # get the number of columns for the table 
+            read -p "please enter the number of column : " col_num
+            # check that the number is integer and positive
+            validate_data_type $col_num
+            if [ $? -eq 1 ]; then
+                # loop for the number of column 
+                # get columns names
+                # check the column name is string and not exist in the table 
+                # append in list 
+                cols_name_list=()
+                for ((i=1; i<=$col_num; i++)); do 
+                    while true ; do
+                        read -p "please enter column $i name : " col_name
+                         if check_if_exists "$col_name" cols_name[@]; then
+                            print_error "Duplicate Column Name";
+                        else
+                            
+                            cols_name+=($col_name);
+                            break;
+                        fi
+                    done
+
+                done
+
+                
+                
+                break;
+            else
+                print_error "Columns number must be integer positive";
+
+            fi;
+
+        done;
+    fi;
+   # if the table not exist
+
+   
+    # loop for the number of column 
+        # get columns names
+        # check the column name is string and not exist in the table 
+        # append in list 
+    # ask user to choose primary key can make table without primary key
+
+    # loop on column to set data type
+
+
+
+    # append in metadata file
+    # print table created and add in logs
+
+
+   # if the table exist
+    #print error messagee that the table exist
    
 }
 

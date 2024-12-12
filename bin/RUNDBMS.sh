@@ -1,5 +1,11 @@
 #!/bin/bash
+
+source "$(dirname "$0")/lib.sh"
+source "$(dirname "$0")/TABLE_OPERATIONS.sh"
 source "$(dirname "$0")/DATABASE_OPERATIONS.sh"
+
+# Main script logic
+# ... (Rest of the RUNDBMS.sh code)
 
 # Main script to initialize and run the DBMS
 
@@ -44,7 +50,6 @@ handle_user_input() {
             exit 0
             ;;
         *)
-            echo "Invalid option. Please try again."
             display_main_menu
             ;;
     esac

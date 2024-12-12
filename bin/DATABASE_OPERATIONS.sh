@@ -1,4 +1,5 @@
 #!/bin/bash
+# Sourcing utility and table operations scripts
 source "$(dirname "$0")/lib.sh"
 source "$(dirname "$0")/TABLE_OPERATIONS.sh"
 
@@ -16,19 +17,19 @@ create_database() {
     # if exist print_error() to the user and insert into logs
         if [ $? == 1 ]; then
             print_error "Database Exists"
-            log_message ERROR "Tried to create an existing database with name $dbname"
+            log_message ERROR "Tried to create an existing database with name $dbname" 
             create_database
     #if not exists create database foler
         else 
             mkdir -p "databases/$dbname";
             echo "Database $dbname Created"
-            log_message INFO "Database $dbname Created";
+            log_message INFO "Database $dbname Created" ;
         fi;
         read -p "press to continue"
         display_main_menu
     else 
         print_error "Database name must be string"
-        log_message ERROR "Tried to enter an invalid name [ $dbname ] for database "
+        log_message ERROR "Tried to enter an invalid name [ $dbname ] for database " 
         create_database
     fi;
 }
@@ -40,7 +41,7 @@ list_databases() {
     directory_exists "databases/"
     if [ $? == 1 ] && [ "$(ls -A databases/)" ] ; then 
         echo -e "$(ls -l databases/ | grep ^d | awk '{print $9}')"
-        log_message INFO "lists the exist databases "
+        log_message INFO "lists the exist databases " 
     else
         Echo "There is no databases exists"
     fi;
@@ -56,17 +57,17 @@ connect_to_database() {
     if [ $? == 2 ]; then
         directory_exists "databases/$dbname"
         if [ $? == 1 ]; then
-            log_message INFO "connect to $dbname"
+            log_message INFO "connect to $dbname" 
             cd databases/$dbname
             display_table_menu
         else
             print_error "Database not exist"
-            log_message ERROR "try to connect to not existing database $dbname"
+            log_message ERROR "try to connect to not existing database $dbname" 
             connect_to_database
         fi;
     else
         print_error "Database name must be string"
-        log_message ERROR "Tried to enter an invalid name [ $dbname ] for database "
+        log_message ERROR "Tried to enter an invalid name [ $dbname ] for database " 
         connect_to_database
     fi;
    
@@ -80,18 +81,18 @@ drop_database() {
         directory_exists "databases/$dbname"
         if [ $? == 1 ]; then
             rm -r databases/$dbname
-            log_message INFO "Drop Database $dbname"
+            log_message INFO "Drop Database $dbname" 
             Echo "Database Droped"
             read -p "press enter to continue"
             display_main_menu
         else
             print_error "Database not exist"
-            log_message ERROR "try to Drop not existing database $dbname"
+            log_message ERROR "try to Drop not existing database $dbname" 
             drop_database
         fi;
     else
         print_error "Database name must be string"
-        log_message ERROR "Tried to enter an invalid name [ $dbname ] for database "
+        log_message ERROR "Tried to enter an invalid name [ $dbname ] for database " 
         drop_database
     fi;
 }

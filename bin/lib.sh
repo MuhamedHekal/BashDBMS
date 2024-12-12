@@ -1,10 +1,9 @@
 #!/bin/bash
-
 # Common utility functions
 
 # Function to check if a file exists
 file_exists() {
-    if [ -e "$1" ]; then
+    if [ -f "$1" ]; then
         return 1
     else
         return 0
@@ -24,7 +23,10 @@ directory_exists() {
 validate_data_type() {
     local input="$1"
 
-    if [[ "$input" =~ ^[0-9]+$ ]]; then
+    if [[ "$input" =~ ^[0]+$ ]]; then
+        return 3 # 3 for zero
+
+    elif [[ "$input" =~ ^[0-9]+$ ]]; then
         return 1 # 1 for integer data type 
   
     elif [[ "$input" =~ ^[a-zA-Z0-9]+$ ]]; then
@@ -46,13 +48,14 @@ print_error() {
 
 # Function to log messages (optional for debugging)
 log_message() {
+    
     local level="$1"      # Log level (INFO, ERROR, WARNING etc.)
     local message="$2"     # Message to log
     local color_reset="\033[0m"
     local color_red="\033[31m"    # For ERROR
     local color_yellow="\033[33m" # For WARNING
     local color_green="\033[32m"  # For INFO
-    local logfile="databases/logfile.log"
+    logfile="logfile.log"
 
     # Determine color for terminal output based on log level
     local color
@@ -63,7 +66,7 @@ log_message() {
         *) color="$color_reset" ;;
     esac
     # check if the log file exists or not and if nor create it 
-    file_exists "$logfile"
+    file_exists $logfile
     if [ $? -eq 0 ]; then 
         touch "$logfile"
     fi;
@@ -75,3 +78,4 @@ log_message() {
     echo "$(date +"%Y-%m-%d %H:%M:%S") [${level}]: $message" >> "$logfile"
     
 }
+
