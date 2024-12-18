@@ -14,6 +14,7 @@ check_if_exists() {
         if [[ "$name" == "$col_name" ]]; then
             return 0  # Exists
         fi
+
     done
     return 1  # Does not exist
 }
@@ -24,67 +25,119 @@ check_if_exists() {
 create_table() {
    #Get the table name from the user
     read -p "please enter the table name : " tb_name
-   #check if the table name exist in the databases
+    #check if the table name exist in the databases
     file_exists $tb_name;
     if [ $? -eq 1 ]; then
         print_error "Table Exist"
         log_message  ERROR "Tried to create an existing table with name $tb_name" 
+        create_table
     else
-        while true; do 
-            # get the number of columns for the table 
-            read -p "please enter the number of column : " col_num
-            # check that the number is integer and positive
-            validate_data_type $col_num
-            if [ $? -eq 1 ]; then
-                # loop for the number of column 
-                # get columns names
-                # check the column name is string and not exist in the table 
-                # append in list 
-                cols_name_list=()
-                for ((i=1; i<=$col_num; i++)); do 
-                    while true ; do
-                        read -p "please enter column $i name : " col_name
-                         if check_if_exists "$col_name" cols_name[@]; then
+        # validate the table name can string only [ string mean just string or comination of string and number or numbers and string]
+        validate_data_type $tb_name;
+        if [ $? -eq 2 ]; then
+        # if the table not exist
+            while true; do 
+                # get the number of columns for the table 
+                read -p "please enter the number of columns : " col_num
+                # check that the number is integer and positive
+                validate_data_type $col_num
+                if [ $? -eq 1 ]; then
+                    # loop for the number of column 
+                    # get columns names
+                    # check the column name is string and not exist in the table 
+                    # append in list 
+                    cols_name_list=()
+                    for ((i=1; i<=$col_num; i++)); do 
+                        while true ; do
+                            read -p "please enter column $i name : " col_name
+                            check_if_exists "$col_name" cols_name_list[@]
+                            if [ $? -eq "0" ]; then
                             print_error "Duplicate Column Name";
-                        else
-                            
-                            cols_name+=($col_name);
+                            else
+                                cols_name_list+=($col_name);
+                                break;
+                            fi
+                        done
+
+                    done
+                    #################################################
+                    # ask user to choose primary key can make table without primary key
+                    clear
+                    for ((i=0; i<=$col_num; i++)); do 
+                        if [ $i -eq $col_num ]; then 
+                            Echo "$(( i + 1 )) ) None" 
                             break;
-                        fi
+                        fi 
+                        Echo "$(( i + 1 )) ) ${cols_name_list[$i]}"
                     done
 
-                done
+                    while true; do
+                        read -p  "Please Choose a column for priamry key: " pk_col
+                        validate_data_type $pk_col
+                        if [ $? -eq 1 ] && [ $pk_col -le $(( col_num + 1 )) ]; then 
+                            if [ $pk_col -eq $(( col_num + 1 )) ]; then 
+                                pk_col='None'
+                            else
+                                pk_col=${cols_name_list[$(( pk_col - 1 ))]}
+                            fi 
+                            break 
+                        else        
+                            print_error "Invalid choise";
 
-                
-                
-                break;
-            else
-                print_error "Columns number must be integer positive";
+                        fi
 
-            fi;
+                    done;
+                    #################################################
+                    # loop on column to set data type
+                    touch "$tb_name" # file for table data
+                    touch ".$tb_name" #hidden file for meta data
+                    for name in "${cols_name_list[@]}"; do
+                        meta_data='' # this is the meta data line 
+                        clear
+                        echo "Pelase enter the data type for the column $name"
+                        echo "1) Integer"
+                        echo "2) String"
+                        while true; do
+                            read -p "What is Your choise : " col_dt
+                            validate_data_type $col_dt
+                            if [ $? -eq 1 ] && [ "$col_dt" -le "2" ]; then 
+                                if [ "$col_dt" -eq "1" ]; then
+                                    meta_data+="$name:Int:"
+                                else  
+                                    meta_data+="$name:String:"
+                                fi;
 
-        done;
-    fi;
-   # if the table not exist
+                                if [ "$pk_col" == "$name" ]; then
+                                    meta_data+="PK"
+                                fi;
+                                # append in metadata file
+                                echo "$meta_data" >> ".$tb_name"
+                                # print table created and add in logs
+                                
+                                break
+                            else 
+                                print_error "Invalid choise";
+                            fi
+                            
+                        done;
+                    done
+                    break; # for break from the main loop
+                else
+                    print_error "Columns number must be integer positive";
 
-   
-    # loop for the number of column 
-        # get columns names
-        # check the column name is string and not exist in the table 
-        # append in list 
-    # ask user to choose primary key can make table without primary key
-
-    # loop on column to set data type
-
-
-
-    # append in metadata file
-    # print table created and add in logs
-
-
-   # if the table exist
-    #print error messagee that the table exist
-   
+                fi;
+            done;
+        else
+            print_error "Invalid table name";
+            log_message  ERROR "tring to create table with invalid name:  $tb_name " 
+            create_table
+        fi
+    
+fi;
+    echo "Table $tb_name Created"
+    read -p "press enter to continue"
+    log_message  INFO "table with table_name: $tb_name created" 
+    display_table_menu
 }
 
 # Function to list tables in database

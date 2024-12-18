@@ -1,0 +1,4 @@
+id:Int:PK
+name:String:
+salary:Int:
+email:String:
