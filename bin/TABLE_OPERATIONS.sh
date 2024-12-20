@@ -19,8 +19,6 @@ check_if_exists() {
     return 1  # Does not exist
 }
 
-
-
 # Function to create a new table
 create_table() {
    #Get the table name from the user
@@ -53,6 +51,7 @@ create_table() {
                             check_if_exists "$col_name" cols_name_list[@]
                             if [ $? -eq "0" ]; then
                             print_error "Duplicate Column Name";
+                            log_message  ERROR "Tried to create an existing column in table:  $tb_name"
                             else
                                 cols_name_list+=($col_name);
                                 break;
@@ -133,7 +132,7 @@ create_table() {
             create_table
         fi
     
-fi;
+    fi;
     echo "Table $tb_name Created"
     read -p "press enter to continue"
     log_message  INFO "table with table_name: $tb_name created" 
@@ -142,8 +141,19 @@ fi;
 
 # Function to list tables in database
 list_table() {
-    # Placeholder for data insertion logic
-    echo "list_table" ; 
+    if [ $(ls | wc -l) -eq "0" ]; then 
+        echo "No tables found"
+        log_message  INFO "List table in database $dbname" 
+        read -p "press enter to continue"
+        display_table_menu
+    else
+        clear
+        echo "The tables found are: "
+        ls
+        log_message  INFO "List tables in database $dbname" 
+        read -p "Press enter to contnue"
+        display_table_menu
+    fi
 }
 
 # Function to drop tables

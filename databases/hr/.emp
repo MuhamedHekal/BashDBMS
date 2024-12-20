@@ -1,4 +1,3 @@
-id:Int:PK
+id:Int:
 name:String:
-salary:Int:
-email:String:
+age:Int:

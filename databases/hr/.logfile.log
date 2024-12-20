@@ -1,0 +1,15 @@
+2024-12-20 20:51:29 [INFO]: List table in database hr
+2024-12-20 20:51:30 [INFO]: List table in database hr
+2024-12-20 20:51:35 [INFO]: List table in database hr
+2024-12-20 20:52:03 [INFO]: List table in database hr
+2024-12-20 20:52:07 [INFO]: List table in database hr
+2024-12-20 20:52:31 [INFO]: table with table_name: emp created
+2024-12-20 20:54:21 [INFO]: List tables in database hr
+2024-12-20 20:54:28 [ERROR]: Tried to create an existing table with name emp
+2024-12-20 20:54:31 [ERROR]: tring to create table with invalid name:   
+2024-12-20 20:54:33 [ERROR]: tring to create table with invalid name:   
+2024-12-20 20:54:33 [ERROR]: tring to create table with invalid name:   
+2024-12-20 20:54:33 [ERROR]: tring to create table with invalid name:   
+2024-12-20 20:54:33 [ERROR]: tring to create table with invalid name:   
+2024-12-20 20:54:34 [ERROR]: tring to create table with invalid name:   
+2024-12-20 20:54:35 [ERROR]: tring to create table with invalid name:  34 

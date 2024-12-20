@@ -14,7 +14,7 @@ This project is a simple **Database Management System (DBMS)** implemented using
 │   └── DBs_names/           # Directory for databases
 │       └── tables_name/     # Directory for tables within a database
 │           └── tables_data/ # File(s) storing table data
-│           └── logfile.log  # log file for table in this databases
-│   └── logfile.log          # file that contain all logs made in this RDMS
+│           └── .logfile.log  # log file for table in this databases [hidden file]
+│   └── .logfile.log          # file that contain all logs made in this database [hidden file]
 └── docs/                    # Documentation files
 

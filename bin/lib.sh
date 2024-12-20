@@ -55,7 +55,7 @@ log_message() {
     local color_red="\033[31m"    # For ERROR
     local color_yellow="\033[33m" # For WARNING
     local color_green="\033[32m"  # For INFO
-    logfile="logfile.log"
+    logfile=".logfile.log"
 
     # Determine color for terminal output based on log level
     local color
