@@ -158,8 +158,22 @@ list_table() {
 
 # Function to drop tables
 drop_table() {
-    # Placeholder for data insertion logic
-    echo "drop_table" ; 
+    clear
+    read -p "please enter the table name: " drop_tbname
+    file_exists $drop_tbname
+    if [ $? -eq 1 ]; then
+        rm $drop_tbname && rm .$drop_tbname
+        echo "Table $drop_tbname has been dropped"
+        log_message  INFO "Drop table with name : $drop_tbname" 
+        read -p "Press enter to contnue"
+        display_table_menu
+
+    else
+        echo "Table Not exist "
+        log_message  ERROR "Try to drop un existing table with name : $drop_tbname" 
+        read -p "Press enter to contnue"
+        drop_table
+    fi;
 }
 
 # Function to insert into table

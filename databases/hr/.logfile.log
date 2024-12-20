@@ -13,3 +13,10 @@
 2024-12-20 20:54:33 [ERROR]: tring to create table with invalid name:   
 2024-12-20 20:54:34 [ERROR]: tring to create table with invalid name:   
 2024-12-20 20:54:35 [ERROR]: tring to create table with invalid name:  34 
+2024-12-20 21:02:50 [INFO]: Drop table with name : emp
+2024-12-20 21:04:01 [INFO]: table with table_name: emp created
+2024-12-20 21:04:18 [INFO]: table with table_name: std created
+2024-12-20 21:04:23 [ERROR]: Try to drop un existing table with name : eeemep
+2024-12-20 21:04:35 [ERROR]: Try to drop un existing table with name : ahmed
+2024-12-20 21:04:37 [INFO]: Drop table with name : emp
+2024-12-20 21:05:00 [INFO]: List tables in database hr
