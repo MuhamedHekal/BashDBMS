@@ -20,3 +20,11 @@
 2024-12-20 21:04:35 [ERROR]: Try to drop un existing table with name : ahmed
 2024-12-20 21:04:37 [INFO]: Drop table with name : emp
 2024-12-20 21:05:00 [INFO]: List tables in database hr
+2024-12-20 21:27:48 [INFO]: table with table_name: emp created
+2024-12-20 21:42:07 [ERROR]: Try to drop un existing table with name : 
+2024-12-20 23:12:24 [INFO]: table with table_name: ins created
+2024-12-20 23:13:00 [INFO]: Record New line of data into table : ins
+2024-12-20 23:14:01 [INFO]: Record New line of data into table : ins
+2024-12-20 23:14:49 [INFO]: Record New line of data into table : std
+2024-12-20 23:15:28 [INFO]: Record New line of data into table : ins
+2024-12-20 23:18:24 [INFO]: Record New line of data into table : std

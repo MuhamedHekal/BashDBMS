@@ -169,7 +169,7 @@ drop_table() {
         display_table_menu
 
     else
-        echo "Table Not exist "
+        print_error "Table Not exist "
         log_message  ERROR "Try to drop un existing table with name : $drop_tbname" 
         read -p "Press enter to contnue"
         drop_table
@@ -178,8 +178,81 @@ drop_table() {
 
 # Function to insert into table
 insert_into_table() {
-    # Placeholder for displaying table data
-    echo "insert_into_table" ; 
+    # read the table name from the user
+    read -p "Please Enter the table name you want to insert into : " insert_tbname
+    # check if the table exists
+    file_exists $insert_tbname
+    #if exists 
+    if [ $? -eq "1" ]; then
+        # get all column name in a list and if it has a primary key save the pk column name
+        cols_name_list=()
+        #Read the column names from the file and populate the array
+        while IFS= read -r col_name; do
+            cols_name_list+=("$col_name") # Append each column name as a separate array element
+        done < <(awk -F ':' '{ print $1 }' ".$insert_tbname")
+
+        pk_col=$(grep ':PK' .$insert_tbname | cut -d: -f 1)
+        #loop in each column and ask user to enter the value
+        data_line='' # line to be inserted into table
+        for name in "${cols_name_list[@]}"; do
+            col_data_type=$(grep "^$name" .$insert_tbname | cut -d: -f 2)
+            # valid input data type
+            while true; do
+                read -p "Please enter the value of column [[$name]] with data type [[$col_data_type]] : " col_value
+                validate_data_type $col_value
+                is_valid=$?
+                # validate data type
+                if ([ $is_valid -eq 1 ] && [ "$col_data_type" == 'Int' ]) || ([ $is_valid -eq 2 ] && [ "$col_data_type" == 'String' ]) ; then
+                    # if it pk check is no duplicate in the value
+                    if [ "$name" == "$pk_col" ]; then
+                        pk_col_field_num=$(grep -n ':PK' .$insert_tbname |cut -d: -f 1)
+                        # check if the peimary key exists or not
+                        is_exist=$(
+                            awk -F ':' -v field_num="$pk_col_field_num" -v col_val="$col_value" ' 
+                                BEGIN{ 
+                                    flag =0; 
+                                    }
+                                    { 
+                                        if ($field_num == col_val) {
+                                            flag = 1;
+                                        }
+                                    }END{ 
+                                    print flag
+                                        }' "$insert_tbname" )
+                        # pk not exist
+                        if [ $is_exist == 0 ]; then
+                            echo "Primary key not Violated"
+                            data_line+=$col_value:
+                            break;
+                        #pk exist              
+                        else
+                            print_error "Primary key Violated"
+                        fi
+                
+                # if is not a primaey key
+                else
+                    data_line+=$col_value:
+                    break;
+                fi
+
+                else    
+                    print_error "Invalid data type"
+                    continue
+                fi;
+            done
+            # after validation append all value in the table file 
+
+        done;
+        data_line=${data_line%:}
+        echo $data_line >> $insert_tbname 
+        read -p "The Data Recorded"
+        log_message INFO "Record New line of data into table : $insert_tbname"
+        display_table_menu
+    else
+        #if not exists
+        print_error "Table Not Exist" 
+        insert_into_table
+    fi;
 }
 
 # Function to select from
