@@ -50,7 +50,7 @@ This project is a simple Database Management System (DBMS) implemented using Bas
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/MuhamedHekal/DBMS.git
+git clone https://github.com/MuhamedHekal/BashDBMS.git
 cd DBMS
 ```
 
