@@ -19,6 +19,92 @@ check_if_exists() {
     return 1  # Does not exist
 }
 
+print_table_data() {
+    local metadata_file="$1"
+    local data_file="$2"
+    local filter_col="$3"
+    local filter_val="$4"
+
+    # Extract column names from metadata file
+    columns=()
+    while IFS=':' read -r col_name _ _; do
+        columns+=("$col_name")
+    done < "$metadata_file"
+
+    # Get the index of the filter column if provided
+    col_index=-1
+    if [ -n "$filter_col" ]; then
+        for i in "${!columns[@]}"; do
+            if [ "${columns[$i]}" == "$filter_col" ]; then
+                col_index=$i
+                break
+            fi
+        done
+
+        # Check if the column exists
+        if [ $col_index -eq -1 ]; then
+            print_error "Column '$filter_col' not found!"
+            return 1
+        fi
+    fi
+
+    # Scenario 1: If both filter_col and filter_val are empty, print all data with all columns in the header
+    if [ -z "$filter_col" ] && [ -z "$filter_val" ]; then
+        # Print the full header
+        for col in "${columns[@]}"; do
+            printf "%-15s" "$col"
+        done
+        printf "\n"
+        printf '%.0s-' {1..50}
+        printf "\n"
+
+        # Print the full data
+        while IFS=':' read -r -a row; do
+            for value in "${row[@]}"; do
+                printf "%-15s" "$value"
+            done
+            printf "\n"
+        done < "$data_file"
+
+    # Scenario 2: When all 4 attributes have values, search for specific row using filter_col and filter_val
+    elif [ -n "$filter_col" ] && [ -n "$filter_val" ]; then
+        # Print the full header
+        for col in "${columns[@]}"; do
+            printf "%-15s" "$col"
+        done
+        printf "\n"
+        printf '%.0s-' {1..50}
+        printf "\n"
+
+        # Print the row that matches the filter
+        while IFS=':' read -r -a row; do
+            if [ "${row[$col_index]}" == "$filter_val" ]; then
+                for value in "${row[@]}"; do
+                    printf "%-15s" "$value"
+                done
+                printf "\n"
+            fi
+        done < "$data_file"
+
+    # Scenario 3: When filter_val is empty, print only the column name in the header and the data for that column
+    elif [ -z "$filter_val" ]; then
+        # Print only the column name in the header
+        printf "%-15s" "${columns[$col_index]}"
+        printf "\n"
+        printf '%.0s-' {1..50}
+        printf "\n"
+
+        # Print the data for the filtered column
+        while IFS=':' read -r -a row; do
+            printf "%-15s" "${row[$col_index]}"
+            printf "\n"
+        done < "$data_file"
+    fi
+
+    printf '%.0s-' {1..50}
+    printf "\n"
+}
+
 # Function to create a new table
 create_table() {
    #Get the table name from the user
@@ -257,8 +343,53 @@ insert_into_table() {
 
 # Function to select from
 select_from_table() {
-    # Placeholder for displaying table data
-    echo "select_from_table" ; 
+    # read the table name
+    read -p 'pleae enter the table name: ' select_tbname
+    # check if the table exists
+    file_exists $select_tbname
+    # if exist
+    if [ $? -eq '1' ]; then
+        # ask the user for option [select all - select rows - select column]
+        while True; do
+            clear
+            echo "1) select all"
+            echo "2) select rows"
+            echo "3) select column"
+            echo "4) exit"
+            read -p 'Please enter your choise: ' selection_choise
+            validate_data_type $selection_choise
+            if [ $? -eq '1' ] && [ $selection_choise -le 4 ]; then
+                #select all
+                if [ $selection_choise -eq 1 ];then
+                    # File paths
+                    print_table_data .$select_tbname $select_tbname
+                    read -p 'press enter to continue'
+                #select rows
+                elif [ $selection_choise -eq 2 ];then
+                    # ask for column name and the value to get the rows
+                    read -p 'select [enter column_name] ' select_column
+                    read -p 'where value = ' select_column_value
+                    print_table_data .$select_tbname $select_tbname $select_column $select_column_value
+                    read -p 'press enter to continue'
+                #select column
+                elif [ $selection_choise -eq 3 ];then
+                    # ask for the column name
+                    read -p 'first choose a column: ' select_column
+                    print_table_data .$select_tbname $select_tbname $select_column
+                    read -p 'press enter to continue'
+                # exit
+                else
+                    break
+                fi
+            fi;
+        done
+        display_table_menu
+    # if not exist 
+    else
+        # ask for right table name
+        print_error "Table Not Exist" 
+        select_from_table
+    fi;
 }
 
 # Function to delete from a table

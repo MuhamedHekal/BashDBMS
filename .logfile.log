@@ -70,3 +70,33 @@
 2024-12-20 23:14:26 [INFO]: connect to hr
 2024-12-20 23:15:03 [INFO]: connect to hr
 2024-12-20 23:18:05 [INFO]: connect to hr
+2025-01-04 07:32:08 [INFO]: lists the exist databases 
+2025-01-04 07:32:11 [INFO]: connect to hr
+2025-01-04 11:20:17 [ERROR]: try to connect to not existing database emp
+2025-01-04 11:20:18 [INFO]: connect to hr
+2025-01-04 11:20:25 [INFO]: connect to hr
+2025-01-04 11:21:40 [INFO]: connect to hr
+2025-01-04 11:22:12 [INFO]: connect to hr
+2025-01-04 11:23:01 [INFO]: connect to hr
+2025-01-04 11:32:44 [INFO]: connect to hr
+2025-01-04 11:33:22 [INFO]: connect to hr
+2025-01-04 11:34:04 [INFO]: connect to hr
+2025-01-04 11:36:39 [INFO]: connect to hr
+2025-01-04 11:37:15 [INFO]: connect to hr
+2025-01-04 11:39:05 [INFO]: connect to hr
+2025-01-04 11:39:43 [INFO]: connect to hr
+2025-01-04 11:40:04 [INFO]: connect to hr
+2025-01-04 11:42:49 [INFO]: connect to hr
+2025-01-04 11:43:22 [INFO]: connect to hr
+2025-01-04 11:52:02 [INFO]: connect to hr
+2025-01-04 11:52:48 [INFO]: connect to hr
+2025-01-04 11:53:10 [INFO]: connect to hr
+2025-01-04 11:56:53 [INFO]: connect to hr
+2025-01-04 11:57:55 [INFO]: connect to hr
+2025-01-04 11:59:10 [INFO]: connect to hr
+2025-01-04 12:00:02 [INFO]: connect to hr
+2025-01-04 12:03:09 [INFO]: connect to hr
+2025-01-04 12:04:09 [INFO]: connect to hr
+2025-01-04 12:04:30 [INFO]: connect to hr
+2025-01-04 12:05:34 [INFO]: connect to hr
+2025-01-04 12:06:47 [INFO]: connect to hr
